@@ -1,0 +1,35 @@
+version: '3'
+services:
+  tickets-db:
+    image: postgres:11.1
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_USER=tickets
+      - POSTGRES_DB=tickets_development
+    volumes:
+      - data-volume:/var/lib/postgresql
+  tickets-migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile.development
+    depends_on:
+      - tickets-db
+    environment:
+      - PASSENGER_APP_ENV=development
+    command: ["./wait-for-postgres.sh", "tickets-db", "bin/rails", "db:migrate"]
+  tickets:
+    build:
+      context: .
+      dockerfile: Dockerfile.development
+    depends_on:
+      - tickets-db
+      - tickets-migrate
+    ports:
+      - "80:80"
+    environment:
+      - PASSENGER_APP_ENV=development
+      - RAILS_LOG_TO_STDOUT=true
+    volumes:
+      - .:/home/app/webapp
+volumes:
+  data-volume:
