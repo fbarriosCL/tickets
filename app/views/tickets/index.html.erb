@@ -42,9 +42,7 @@
     <% @users.each do |user| %>
     <tr>
       <td><%= user.email %></td>
-      <td><%= link_to "Asignar Ticket", profile_path(@profile.id, param1: 'value1', param2: 'value2'), method: :post %>
-        
-      </td>
+      <td><%= link_to "Asignar Ticket", tickets_path(user.id, user_id: user.id, status: 'assigned'), method: :post %></td>
     </tr>
     <% end %>
   </tbody>
