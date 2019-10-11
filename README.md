@@ -1,6 +1,6 @@
 # Tickets
 
-[Tickets](https://tickets.herokuapp.com) is a web applications.
+[Tickets](https://tickets-vflight.herokuapp.com/) is a web applications.
 
 ## Development
 
