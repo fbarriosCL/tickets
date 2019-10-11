@@ -43,3 +43,8 @@ Run the project with:
     $ docker-compose up --build -d
 
 That's going to create the database and run the migrations automatically.
+
+### User Test
+
+Admin: admin@test.cl password: 123456
+User: user@test.cl password: 123456
