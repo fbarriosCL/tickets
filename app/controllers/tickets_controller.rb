@@ -1,4 +1,5 @@
 class TicketsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_ticket, only: [:show, :edit, :update, :destroy]
   before_action :set_users, only: [:index]
   before_action :set_user, only: [:assign_ticket]
@@ -6,6 +7,7 @@ class TicketsController < ApplicationController
   # GET /tickets.json
   def index
     @tickets = Ticket.all
+    @ticket = Ticket.new
   end
 
   # GET /tickets/1
@@ -25,20 +27,16 @@ class TicketsController < ApplicationController
   # POST /tickets
   # POST /tickets.json
   def create
-    puts '---------------'
-    puts ticket_params
-    puts '---------------'
     @ticket = Ticket.new(ticket_params)
-
-    # respond_to do |format|
+    respond_to do |format|
       if @ticket.save
-        #format.html { redirect_to @ticket, notice: 'Ticket was successfully created.' }
-        #format.json { render :show, status: :created, location: @ticket }
+        format.html { redirect_to root_path, notice: 'Ticket was successfully created.' }
+        format.json { render :show, status: :created, location: @ticket }
       else
-        #format.html { render :new }
-        #format.json { render json: @ticket.errors, status: :unprocessable_entity }
+        format.html { render :new }
+        format.json { render json: @ticket.errors, status: :unprocessable_entity }
       end
-    #end
+    end
   end
 
   # PATCH/PUT /tickets/1
@@ -81,6 +79,6 @@ class TicketsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def ticket_params
-      params.permit(:title, :description, :user_id, :status)
+      params.require(:ticket).permit(:title, :description, :user_id, :status)
     end
 end

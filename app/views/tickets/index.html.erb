@@ -2,47 +2,37 @@
 
 <h1>Tickets</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th>User</th>
-      <th>Status</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @tickets.each do |ticket| %>
-    <tr>
-      <td><%= ticket.title %></td>
-      <td><%= ticket.description %></td>
-      <td><%= ticket.user %></td>
-      <td><%= ticket.status %></td>
-      <td><%= link_to 'Show', ticket %></td>
-      <td><%= link_to 'Edit', edit_ticket_path(ticket) %></td>
-      <td><%= link_to 'Destroy', ticket, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Ticket', new_ticket_path %>
-
-<% if @users.present? %>
+<% if @users.present? && current_user.admin? %>
+<h2 id="success"></h2>
 <table class="table">
   <tr>
     <th>User</th>
-    <th>Ticket</th>
+    <th>Estado Ticket</th>
+    <th>Acción</th>
   </tr>
   <tbody>
     <% @users.each do |user| %>
     <tr>
       <td><%= user.email %></td>
-      <td><%= link_to "Asignar Ticket", tickets_path(user.id, user_id: user.id, status: 'assigned'), method: :post %></td>
+      <td id="count-<%= user.id %>"><%= user.tickets.count %></td>
+      <td><%= render partial: 'form', locals: { ticket: @ticket, user_id: user.id, status: :assigned, title: 'Asignar Ticket' } %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% elsif current_user.user? && current_user.tickets.present? %>
+<table class="table">
+  <tr>
+    <th>User</th>
+    <th>Estado Ticket</th>
+    <th>Acción</th>
+  </tr>
+  <tbody>
+    <% current_user.tickets.each do |ticket| %>
+    <tr>
+      <td>Ticket <%= ticket.id %></td>
+      <td><%= ticket.status %></td>
+      <td><%= render partial: 'form', locals: { ticket: @ticket, user_id: current_user.id, status: :request, title: 'Solicitar Ticket' } %></td>
     </tr>
     <% end %>
   </tbody>
