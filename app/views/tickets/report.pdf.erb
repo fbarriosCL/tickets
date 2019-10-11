@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>PDF</title>
 </head>
 <body>
   <div class='container'>
-    Hola:
+    <% if @tickets.present? %>
+    Lista de tickets:
     <% @tickets.each do |ticket| %>
     <p>Ticket: <%= ticket.id %> | <%= ticket.status %></p>
+    <% end %>
     <% end %>
   </div>
 </body>
