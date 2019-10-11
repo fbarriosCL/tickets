@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Tickets</h1>
+
+<% if @users.present? && current_user.admin? %>
+<h2 id="success"></h2>
+<table class="table">
+  <tr>
+    <th>User</th>
+    <th>Estado Ticket</th>
+    <th>Acción</th>
+  </tr>
+  <tbody>
+    <% @users.each do |user| %>
+    <tr>
+      <td><%= user.email %></td>
+      <td id="count-<%= user.id %>"><%= user.tickets.count %></td>
+      <td><%= render partial: 'form', locals: { ticket: @ticket, user_id: user.id, status: :assigned, title: 'Asignar Ticket' } %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% elsif current_user.user? && current_user.tickets.present? %>
+<table class="table">
+  <tr>
+    <th>User</th>
+    <th>Estado Ticket</th>
+    <th>Acción</th>
+  </tr>
+  <tbody>
+    <% current_user.tickets.each do |ticket| %>
+    <tr>
+      <td>Ticket <%= ticket.id %></td>
+      <td><%= ticket.status %></td>
+      <td><%= render partial: 'form', locals: { ticket: @ticket, user_id: current_user.id, status: :request, title: 'Solicitar Ticket' } %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>

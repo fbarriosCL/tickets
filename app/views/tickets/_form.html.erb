@@ -1,0 +1,5 @@
+<%= form_with(model: ticket, remote: true) do |form| %>
+<%= form.hidden_field :user_id, :value => user_id %>
+<%= form.hidden_field :status, :value => status %>
+<%= form.submit title, class: 'btn btn-link' %>
+<% end %>
