@@ -9,7 +9,7 @@
     <% if @tickets.present? %>
     Lista de tickets:
     <% @tickets.each do |ticket| %>
-    <p>Ticket: <%= ticket.id %> | <%= ticket.status %></p>
+    <p>Ticket: <%= ticket.id %> | <%= ticket.status %> | <%= ticket.created_at %></p>
     <% end %>
     <% end %>
   </div>
