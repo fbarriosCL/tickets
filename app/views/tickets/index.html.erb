@@ -1,6 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Tickets</h1>
+<%= link_to 'Create PDF document', tickets_path(:format => :pdf) %>
 
 <% if @users.present? && current_user.admin? %>
 <h2 id="success"></h2>
