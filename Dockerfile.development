@@ -7,7 +7,11 @@ ENV HOME /root
 CMD ["/sbin/my_init"]
 
 # Additional packages
-RUN apt-get update && apt-get install -y -o Dpkg::Options::="--force-confold" postgresql-client tzdata wkhtmltopdf
+RUN apt-get update && apt-get install -y -o Dpkg::Options::="--force-confold" postgresql-client tzdata wget fontconfig libxrender1 xfonts-75dpi xfonts-base libxext6
+
+RUN wget https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox_0.12.5-1.bionic_amd64.deb
+
+RUN  dpkg -i wkhtmltox_0.12.5-1.bionic_amd64.deb
 
 # Enable Nginx and Passenger
 RUN rm -f /etc/service/nginx/down
