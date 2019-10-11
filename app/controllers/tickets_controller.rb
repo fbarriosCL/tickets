@@ -6,8 +6,12 @@ class TicketsController < ApplicationController
   # GET /tickets
   # GET /tickets.json
   def index
-    @tickets = Ticket.all
+    @tickets = current_user.tickets
     @ticket = Ticket.new
+    respond_to do |format|
+      format.html
+      format.pdf { render template: "tickets/report", pdf: 'Reporte' }
+    end
   end
 
   # GET /tickets/1
