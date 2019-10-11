@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PDF</title>
+</head>
+<body>
+  <div class='container'>
+    Hola:
+    <% @tickets.each do |ticket| %>
+    <p>Ticket: <%= ticket.id %> | <%= ticket.status %></p>
+  </div>
+</body>
+</html>
