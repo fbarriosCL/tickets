@@ -35,10 +35,10 @@ gem 'jbuilder', '~> 2.5'
 
 group :production do
   gem 'wkhtmltopdf-heroku'
+  gem 'wkhtmltopdf-binary-edge'
 end
 
 group :development do
-  gem 'wkhtmltopdf-binary-edge'
   gem 'wicked_pdf'
   gem 'wkhtmltopdf-binary'
 end
